@@ -1,0 +1,2 @@
+# VostrokSTD
+Vostrok standard API
