@@ -1,4 +1,46 @@
 #ifndef VS_STD_H
 #define VS_STD_H
 
+#if defined(_WIN32)
+	#error "VostrokSTD is not supported on Windows"
+#endif
+
+/////////////////////////////
+//
+//		INCLUDES
+//
+/////////////////////////////
+
+#include "vs_types.h"
+
+/////////////////////////////
+//
+//		TYPEDEFS
+//
+/////////////////////////////
+
+typedef enum	vs_std_fd_t	vs_std_fd_t;
+
+/////////////////////////////
+//
+//			ENUM
+//
+/////////////////////////////
+
+enum	vs_std_fd_t
+{
+	VS_STDIN,
+	VS_STDOUT,
+	VS_STDERR
+};
+
+/////////////////////////////
+//
+//		NOHIDE FUNCTIONS
+//
+/////////////////////////////
+
+#ifdef NOHIDE
+#endif
+
 #endif
