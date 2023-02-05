@@ -1,0 +1,18 @@
+[
+ {
+  "directory": "/home/sam0verfl0w/Documents/VostrokAPI/VostrokSTD",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iinc",
+   "-m64",
+   "-c",
+   "src/strings/strlen.c",
+   "-o",
+   "obj/src/strings/strlen.o"
+  ],
+  "file": "src/strings/strlen.c"
+ }
+]
