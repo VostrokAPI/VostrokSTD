@@ -5,6 +5,8 @@
 
 __vs_strlen_sse2:
 	endbr64
+	test rdi, rdi
+	jz .L_null
 	pxor xmm0, xmm0
 	pxor xmm1, xmm1
 	pxor xmm2, xmm2
@@ -121,5 +123,9 @@ __vs_strlen_sse2:
 	bsf rdx, rdx
 	add rax, rdx
 	sub rax, rdi
+	ret
+
+.L_null:
+	xor rax, rax
 	ret
 

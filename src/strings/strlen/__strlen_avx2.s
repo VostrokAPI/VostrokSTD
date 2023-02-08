@@ -4,5 +4,6 @@
 .section .text
 
 __vs_strlen_avx2:
+	endbr64
 	xor rax, rax
 	ret
