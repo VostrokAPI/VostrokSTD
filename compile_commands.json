@@ -8,11 +8,12 @@
    "-Werror",
    "-Iinc",
    "-m64",
+   "-DNO_HIDE=1",
    "-c",
-   "src/strings/strlen.c",
+   "src/strings/strlen/strlen.c",
    "-o",
-   "obj/src/strings/strlen.o"
+   "obj/src/strings/strlen/strlen.o"
   ],
-  "file": "src/strings/strlen.c"
+  "file": "src/strings/strlen/strlen.c"
  }
 ]

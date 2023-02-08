@@ -49,10 +49,7 @@ vs_size_t	vs_strlen(const char *str);
 /////////////////////////////
 
 #ifdef NO_HIDE
-extern vs_size_t	__vs_strlen_slow(const char *str); 
-extern vs_size_t	__vs_strlen_sse2(const char *str);
-extern vs_size_t	__vs_strlen_sse42(const char *str);
-extern vs_size_t	__vs_strlen_avx2(const char *str);
+#include "vs_std_hide.h"
 #endif
 
 void		*vs_memcpy(void *restrict dst, const void *restrict src, vs_size_t n);

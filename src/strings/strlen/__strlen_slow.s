@@ -13,13 +13,10 @@ __vs_strlen_slow:
 	mov rax, rdi
 
 .L_loop:
-	inc rdi
-	cmp byte ptr [rdi], 0x0
+	inc rax
+	cmp byte ptr [rax], 0x0
 	jnz .L_loop
-	sub rdi, rax
-	xor rdi, rax
-	xor rax, rdi
-	xor rdi, rax
+	sub rax, rdi
 	ret
 
 .L_ret_zero:

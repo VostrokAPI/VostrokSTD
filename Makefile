@@ -61,10 +61,6 @@ else
 	CFLAGS += -m64
 endif
 
-ifdef NO_HIDE
-	CFLAGS += -DNO_HIDE=1
-endif
-
 define credits
 \t\tVostrok API
 \t\tVersion\t:\t$(VS_VER)
