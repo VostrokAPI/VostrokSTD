@@ -9,6 +9,7 @@ CFLAGS = -Wall -Wextra -Werror -Iinc
 
 OBJDIR = obj
 DIST = dist
+UNIT_DIR = $(shell pwd)/unit
 
 vpath %.c src
 vpath %.s src
@@ -79,8 +80,9 @@ DYNAMIC_LIB			= $(DIST)/$(NAME).so
 #
 ##############################################
 
-TEST_DIR = tests
-TESTS = $(shell find tests -iname "main.c" -print)
+TEST_DIR 	= tests
+TESTS 		= $(shell find tests -iname "*.c" -print)
+TESTS_MAIN 	= $(TESTS:.c=.out)
 
 ifdef DEBUG
 	CFLAGS	+= -g
@@ -155,13 +157,19 @@ clean:
 fclean: clean
 	@rm -rf $(STATIC_LIB) $(DYNAMIC_LIB) $(OBJDIR)
 	@rm -rf $(DIST)
+	@rm -rf $(UNIT_DIR)
 
 re: fclean $(STATIC_LIB) $(DYNAMIC_LIB)
 
-tests: $(TESTS) $(STATIC_LIB)
-	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] $(LBLUE)Compile Test : $< \n$(RESET)"
-	@$(CC) $(CFLAGS) -Iinc -L. $< -o a.out $(STATIC_LIB)
-	@./a.out
-	@rm -rf ./a.out
+$(UNIT_DIR):
+	@mkdir -p $(UNIT_DIR)
 
-.PHONY: all clean fclean re
+$(TESTS_MAIN): $(TESTS) $(STATIC_LIB) $(UNIT_DIR)
+	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] $(LBLUE)Compile Test : $< \n$(RESET)"
+	@$(CC) $(CFLAGS) -Iinc -L. $< -o $@ $(STATIC_LIB)
+	@$@ -v | ./greatest/contrib/greenest
+	@mv $@ $(UNIT_DIR)
+
+test: $(TESTS_MAIN)
+
+.PHONY: all clean fclean re tests
