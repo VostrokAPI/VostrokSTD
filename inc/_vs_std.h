@@ -1,5 +1,5 @@
-#ifndef VS_STD_HIDE_H
-#define VS_STD_HIDE_H
+#ifndef _VS_STD_H
+#define _VS_STD_H
 
 /////////////////////////////
 //

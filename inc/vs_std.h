@@ -42,16 +42,6 @@ enum	vs_std_fd_t
 
 vs_size_t	vs_strlen(const char *str);
 
-/////////////////////////////
-//
-//	STRLEN NOHIDE FUNCTIONS
-//
-/////////////////////////////
-
-#ifdef NO_HIDE
-#include "vs_std_hide.h"
-#endif
-
 void		*vs_memcpy(void *restrict dst, const void *restrict src, vs_size_t n);
 void		*vs_memmove(void *dst, const void *src, vs_size_t n);
 void		*vs_memset(void *s, int c, vs_size_t size);
