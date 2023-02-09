@@ -124,13 +124,13 @@ CREDITS:
 	@printf "$$credits"
 
 obj/%.o: %.s
-	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] ASM Files Create... $(GREEN)$<$(GREEN) [$(LBLUE) $(APERC)%% $(GREEN)]$(RESET)                \r"
+	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] ASM Files Create... $(GREEN)$<$(GREEN) [$(LBLUE) $(APERC) %% $(GREEN)]$(RESET)                \r"
 	@$(AS) $< -o  $@
 	@$(eval APERC=$(shell echo "$(cnta)/$(NUM_CF)*100" | bc -l | tr '.' '\n' | head -n 1))
 	@$(eval cnta=$(shell echo $$(($(cnta)+1))))
 
 obj/%.o: %.c
-	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] C Files Create... $(GREEN)$<$(GREEN) [$(LBLUE) $(PERC)%% $(GREEN)]$(RESET)                \r"
+	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] C Files Create... $(GREEN)$<$(GREEN) [$(LBLUE) $(PERC) %% $(GREEN)]$(RESET)                \r"
 	@$(CC) $(CFLAGS) -c $< -o  $@
 	@$(eval PERC=$(shell echo "$(cnt)/$(NUM_CF)*100" | bc -l | tr '.' '\n' | head -n 1))
 	@$(eval cnt=$(shell echo $$(($(cnt)+1))))
