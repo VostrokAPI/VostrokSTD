@@ -87,7 +87,7 @@ __vs_strlen_avx2:
 	vpcmpeqb ymm1, ymm0, ymm1
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz end1
+	jnz .L_end1
 	
 	vpcmpeqb ymm2, ymm0, ymm2
 	vpmovmskb eax, ymm2

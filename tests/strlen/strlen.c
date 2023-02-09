@@ -3,7 +3,6 @@
 #include <signal.h>
 
 #include "_vs_std.h"
-#include "vs_std_test_utils.h"
 #include "greatest.h"
 
 /////////////////////////////
@@ -34,6 +33,7 @@ TEST	vs_strlen_slow_small_buf(void)
 {
 	char	buf[0x40];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
@@ -44,6 +44,7 @@ TEST	vs_strlen_slow_med_buf(void)
 {
 	char	buf[0x80];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
@@ -54,6 +55,7 @@ TEST	vs_strlen_slow_big_buf(void)
 {
 	char	buf[0x100];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
 	PASS();
@@ -63,6 +65,7 @@ TEST	vs_strlen_slow_very_big(void)
 {
 	char	buf[0x1000];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
 	PASS();
@@ -72,6 +75,7 @@ TEST	vs_strlen_slow_unaligned_small(void)
 {
 	char	buf[37];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
 	PASS();
@@ -81,6 +85,7 @@ TEST	vs_strlen_slow_unaligned_med(void)
 {
 	char	buf[121];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
 	PASS();
@@ -90,6 +95,7 @@ TEST	vs_strlen_slow_unaligned_big(void)
 {
 	char	buf[0xff6];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_slow(buf), strlen(buf));
 	PASS();
@@ -101,6 +107,7 @@ TEST	vs_strlen_slow_large_buf(void)
 
 	if (!ptr)
 		FAILm("Error: Failed to allocate memory");
+	memset(ptr, 0, 0xFFFFFFFF);
 	memset(ptr, 'A', 0xFFFFFFFF);
 	ASSERT_EQ(__vs_strlen_slow(ptr), strlen(ptr));
 	free(ptr);
@@ -150,6 +157,7 @@ TEST	vs_strlen_sse42_small_buf(void)
 {
 	char	buf[0x40];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ_FMT(__vs_strlen_sse42(buf), strlen(buf), "%ld");
@@ -160,6 +168,7 @@ TEST	vs_strlen_sse42_med_buf(void)
 {
 	char	buf[0x80];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ(__vs_strlen_sse42(buf), strlen(buf));
@@ -170,6 +179,7 @@ TEST	vs_strlen_sse42_big_buf(void)
 {
 	char	buf[0x100];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse42(buf), strlen(buf));
 	PASS();
@@ -179,6 +189,7 @@ TEST	vs_strlen_sse42_very_big(void)
 {
 	char	buf[0x1000];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse42(buf), strlen(buf));
 	PASS();
@@ -188,6 +199,7 @@ TEST	vs_strlen_sse42_unaligned_small(void)
 {
 	char	buf[37];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse42(buf), strlen(buf));
 	PASS();
@@ -197,6 +209,7 @@ TEST	vs_strlen_sse42_unaligned_med(void)
 {
 	char	buf[121];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse42(buf), strlen(buf));
 	PASS();
@@ -206,6 +219,7 @@ TEST	vs_strlen_sse42_unaligned_big(void)
 {
 	char	buf[0xff6];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse42(buf), strlen(buf));
 	PASS();
@@ -217,6 +231,7 @@ TEST	vs_strlen_sse42_large_buf(void)
 
 	if (!ptr)
 		FAILm("Error: Failed to allocate memory");
+	memset(ptr, 0, 0xFFFFFFFF);
 	memset(ptr, 'A', 0xFFFFFFFF);
 	ASSERT_EQ(__vs_strlen_sse42(ptr), strlen(ptr));
 	free(ptr);
@@ -266,6 +281,7 @@ TEST	vs_strlen_sse2_small_buf(void)
 {
 	char	buf[0x40];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ_FMT(__vs_strlen_sse2(buf), strlen(buf), "%ld");
@@ -276,6 +292,7 @@ TEST	vs_strlen_sse2_med_buf(void)
 {
 	char	buf[0x80];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ(__vs_strlen_sse2(buf), strlen(buf));
@@ -286,6 +303,7 @@ TEST	vs_strlen_sse2_big_buf(void)
 {
 	char	buf[0x100];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse2(buf), strlen(buf));
 	PASS();
@@ -295,6 +313,7 @@ TEST	vs_strlen_sse2_very_big(void)
 {
 	char	buf[0x1000];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse2(buf), strlen(buf));
 	PASS();
@@ -304,6 +323,7 @@ TEST	vs_strlen_sse2_unaligned_small(void)
 {
 	char	buf[37];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse2(buf), strlen(buf));
 	PASS();
@@ -313,6 +333,7 @@ TEST	vs_strlen_sse2_unaligned_med(void)
 {
 	char	buf[121];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse2(buf), strlen(buf));
 	PASS();
@@ -322,6 +343,7 @@ TEST	vs_strlen_sse2_unaligned_big(void)
 {
 	char	buf[0xff6];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_sse2(buf), strlen(buf));
 	PASS();
@@ -333,6 +355,7 @@ TEST	vs_strlen_sse2_large_buf(void)
 
 	if (!ptr)
 		FAILm("Error: Failed to allocate memory");
+	memset(ptr, 0, 0xFFFFFFFF);
 	memset(ptr, 'A', 0xFFFFFFFF);
 	ASSERT_EQ(__vs_strlen_sse2(ptr), strlen(ptr));
 	free(ptr);
@@ -382,6 +405,7 @@ TEST	vs_strlen_avx2_small_buf(void)
 {
 	char	buf[0x40];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ_FMT(__vs_strlen_avx2(buf), strlen(buf), "%ld");
@@ -392,6 +416,7 @@ TEST	vs_strlen_avx2_med_buf(void)
 {
 	char	buf[0x80];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 
 	ASSERT_EQ(__vs_strlen_avx2(buf), strlen(buf));
@@ -402,6 +427,7 @@ TEST	vs_strlen_avx2_big_buf(void)
 {
 	char	buf[0x100];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_avx2(buf), strlen(buf));
 	PASS();
@@ -411,6 +437,7 @@ TEST	vs_strlen_avx2_very_big(void)
 {
 	char	buf[0x1000];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_avx2(buf), strlen(buf));
 	PASS();
@@ -420,6 +447,7 @@ TEST	vs_strlen_avx2_unaligned_small(void)
 {
 	char	buf[37];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_avx2(buf), strlen(buf));
 	PASS();
@@ -429,6 +457,7 @@ TEST	vs_strlen_avx2_unaligned_med(void)
 {
 	char	buf[121];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_avx2(buf), strlen(buf));
 	PASS();
@@ -438,6 +467,7 @@ TEST	vs_strlen_avx2_unaligned_big(void)
 {
 	char	buf[0xff6];
 
+	memset(buf, 0, sizeof(buf));
 	memset(buf, 'A', sizeof(buf));
 	ASSERT_EQ(__vs_strlen_avx2(buf), strlen(buf));
 	PASS();
@@ -449,6 +479,8 @@ TEST	vs_strlen_avx2_large_buf(void)
 
 	if (!ptr)
 		FAILm("Error: Failed to allocate memory");
+	
+	memset(ptr, 0, 0xFFFFFFFF);
 	memset(ptr, 'A', 0xFFFFFFFF);
 	ASSERT_EQ(__vs_strlen_avx2(ptr), strlen(ptr));
 	free(ptr);

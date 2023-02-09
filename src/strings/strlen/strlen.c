@@ -8,12 +8,15 @@
 
 #include "vs_types.h"
 
-
-/////////////////////////////
-//
-//		IFUNC DEFINITION
-//
-/////////////////////////////
+/*********************************************************************
+*
+* @brief    vs_strlen	function return length of string
+*
+* @param    const char *
+*
+* @return   vs_size_t:	length of string
+*
+*********************************************************************/
 
 vs_size_t			vs_strlen(const char *str) __attribute__ ((ifunc ("__vs_strlen_ifunc")));
 

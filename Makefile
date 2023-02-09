@@ -106,34 +106,13 @@ else
 	CFLAGS += -m64
 endif
 
-define credits
-\t\tVostrok API
-\t\tVersion\t:\t$(VS_VER)
-\t\tModules Name\t:\t$(NAME)
-\t\tCC Version\t:\t$(VERSION)
-\t\tGithub\t:\thttps://github.com/Vostrok/
-\t\tAuthor\t:\t$(AUTHOR)
-
-
-endef
-export credits
-
-all: CREDITS $(STATIC_LIB) $(DYNAMIC_LIB)
-
-CREDITS:
-	@printf "$$credits"
+all: $(STATIC_LIB) $(DYNAMIC_LIB)
 
 obj/%.o: %.s
-	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] ASM Files Create... $(GREEN)$<$(GREEN) [$(LBLUE) $(APERC) %% $(GREEN)]$(RESET)                \r"
-	@$(AS) $< -o  $@
-	@$(eval APERC=$(shell echo "$(cnta)/$(NUM_CF)*100" | bc -l | tr '.' '\n' | head -n 1))
-	@$(eval cnta=$(shell echo $$(($(cnta)+1))))
+	$(AS) $< -o  $@
 
 obj/%.o: %.c
-	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] C Files Create... $(GREEN)$<$(GREEN) [$(LBLUE) $(PERC) %% $(GREEN)]$(RESET)                \r"
-	@$(CC) $(CFLAGS) -c $< -o  $@
-	@$(eval PERC=$(shell echo "$(cnt)/$(NUM_CF)*100" | bc -l | tr '.' '\n' | head -n 1))
-	@$(eval cnt=$(shell echo $$(($(cnt)+1))))
+	$(CC) $(CFLAGS) -c $< -o  $@
 
 $(STATIC_LIB): $(OBJDIR) $(OBJS_ASM) $(OBJS)
 	@mkdir -p dist
@@ -149,6 +128,7 @@ $(DYNAMIC_LIB): $(OBJDIR) $(OBJS_ASM) $(OBJS)
 
 $(OBJDIR):
 	@mkdir -p $(sort $(addprefix $(OBJDIR)/, $(dir $(SRCS))))
+	@mkdir -p $(sort $(addprefix $(OBJDIR)/, $(dir $(SRCS_ASM))))
 
 clean:
 	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] $(LBLUE)Clean Object files !\n$(RESET)"
@@ -164,11 +144,13 @@ re: fclean $(STATIC_LIB) $(DYNAMIC_LIB)
 $(UNIT_DIR):
 	@mkdir -p $(UNIT_DIR)
 
-$(TESTS_MAIN): $(TESTS) $(STATIC_LIB) $(UNIT_DIR)
+%.out: %.c
 	@printf "$(GREEN)[$(LBLUE)+$(GREEN)] $(LBLUE)Compile Test : $< \n$(RESET)"
-	@$(CC) $(CFLAGS) -Iinc -L. $< -o $@ $(STATIC_LIB)
-	@$@ -v | ./greatest/contrib/greenest
+	$(CC) $(CFLAGS) -Iinc -L. $< -o $@ $(STATIC_LIB)
+	$@ -v | ./greatest/contrib/greenest
 	@mv $@ $(UNIT_DIR)
+
+$(TESTS_MAIN): $(TESTS) $(STATIC_LIB) $(UNIT_DIR)
 
 test: $(TESTS_MAIN)
 

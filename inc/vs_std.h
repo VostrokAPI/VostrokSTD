@@ -34,12 +34,15 @@ enum	vs_std_fd_t
 	VS_STDERR
 };
 
-/////////////////////////////
-//
-//		STRLEN
-//
-/////////////////////////////
-
+/*********************************************************************
+*
+* @brief    vs_strlen	function return length of string
+*
+* @param    const char *
+*
+* @return   vs_size_t:	length of string
+*
+*********************************************************************/
 vs_size_t	vs_strlen(const char *str);
 
 void		*vs_memcpy(void *restrict dst, const void *restrict src, vs_size_t n);
