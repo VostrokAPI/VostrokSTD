@@ -13,6 +13,12 @@ __vs_strlen_avx2:
 	mov ecx, edi
 	mov rdx, rdi
 	vpxor xmm0, xmm0, xmm0
+	vpxor xmm1, xmm1, xmm1
+	vpxor xmm2, xmm2, xmm2
+	vpxor xmm3, xmm3, xmm3
+	vpxor xmm4, xmm4, xmm4
+	vpxor xmm5, xmm5, xmm5
+	vpxor xmm6, xmm6, xmm6
 	and ecx, 0x3F
 	cmp ecx, 0x20
 	ja .L1
