@@ -7,29 +7,33 @@ __vs_strlen_avx2:
 	endbr64
 	test rdi, rdi
 	jz .L_null
+	cmp byte ptr [rdi], 0
+	jz .L_null
+
 	mov ecx, edi
 	mov rdx, rdi
 	vpxor xmm0, xmm0, xmm0
 	and ecx, 0x3F
 	cmp ecx, 0x20
-	ja .L_addr_first_byte_above_32
+	ja .L1
+
 	vpcmpeqb ymm1, ymm0, ymmword ptr [rdi]
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz .L_end1
+	jnz .L3
 	add rdi, 0x20
 	and ecx, 0x1F
-	and rdi, -0x1F
-	jmp .L_next_label
+	and rdi, 0xFFFFFFFFFFFFFFE0
+	jmp .L4
 
-.L_addr_first_byte_above_32:
+.L1:
 	and ecx, 0x1F
-	and rdi, -0x1F
+	and rdi, 0xFFFFFFFFFFFFFFE0
 	vpcmpeqb ymm1, ymm0, ymmword ptr [rdi]
 	vpmovmskb eax, ymm1
 	sar eax, cl
 	test eax, eax
-	jz .L_add_rdi_32
+	jz .L2
 	tzcnt eax, eax
 	add rax, rdi
 	add rax, rcx
@@ -37,36 +41,33 @@ __vs_strlen_avx2:
 	vzeroupper
 	ret
 
-.L_add_rdi_32:
+.L2:
 	add rdi, 0x20
 
-.L_next_label:
+.L4:
 	vpcmpeqb ymm1, ymm0, ymmword ptr [rdi]
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz .L_end1
-	
+	jnz .L3
 	vpcmpeqb ymm1, ymm0, ymmword ptr [rdi+0x20]
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz .L_end2
-	
+	jnz .L5
 	vpcmpeqb ymm1, ymm0, ymmword ptr [rdi+0x40]
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz .L_end3
-
+	jnz .L6
 	vpcmpeqb ymm1, ymm0, ymmword ptr [rdi+0x60]
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz .L_end4
+	jnz .L_ret
 
 	add rdi, 0x80
 	mov rcx, rdi
 	and ecx, 0x7F
-	and rdi, -0x1F
+	and rdi, 0xFFFFFFFFFFFFFF80
 
-.L_loop:
+.L_9:
 	vmovdqa ymm1, ymmword ptr [rdi]
 	vmovdqa ymm2, ymmword ptr [rdi+0x20]
 	vmovdqa ymm3, ymmword ptr [rdi+0x40]
@@ -75,49 +76,46 @@ __vs_strlen_avx2:
 	vpminub ymm5, ymm2, ymm1
 	vpminub ymm6, ymm4, ymm3
 	vpminub ymm5, ymm6, ymm5
-	
+
 	vpcmpeqb ymm5, ymm0, ymm5
 	vpmovmskb eax, ymm5
 	test eax, eax
-	jnz .L_end_loop
+	jnz .L8
 	add rdi, 0x80
-	jmp .L_loop
+	jmp .L_9
 
-.L_end_loop:
+.L8:
 	vpcmpeqb ymm1, ymm0, ymm1
 	vpmovmskb eax, ymm1
 	test eax, eax
-	jnz .L_end1
-	
+	jnz .L3
 	vpcmpeqb ymm2, ymm0, ymm2
 	vpmovmskb eax, ymm2
 	test eax, eax
-	jnz .L_end2
-
+	jnz .L5
 	vpcmpeqb ymm3, ymm0, ymm3
 	vpmovmskb eax, ymm3
 	test eax, eax
-	jnz .L_end3
-
+	jnz .L6
 	vpcmpeqb ymm4, ymm0, ymm4
 	vpmovmskb eax, ymm4
 
-.L_end4:
+.L_ret:
 	tzcnt eax, eax
 	add rax, 0x60
 	add rax, rdi
-	sub rax, rdi
+	sub rax, rdx
 	vzeroupper
 	ret
 
-.L_end1:
+.L3:
 	tzcnt eax, eax
 	add rax, rdi
 	sub rax, rdx
 	vzeroupper
 	ret
 
-.L_end2:
+.L5:
 	tzcnt eax, eax
 	add rax, 0x20
 	add rax, rdi
@@ -125,7 +123,7 @@ __vs_strlen_avx2:
 	vzeroupper
 	ret
 
-.L_end3:
+.L6:
 	tzcnt eax, eax
 	add rax, 0x40
 	add rax, rdi
