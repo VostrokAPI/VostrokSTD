@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
 
 /////////////////////////////
 //
@@ -78,6 +79,16 @@ TEST		vs_syscall_write_read(void)
 	PASS();
 }
 
+TEST	vs_syscall_getpid(void)
+{
+	pid_t	pid[2] = {0, 0};
+
+	pid[0] = getpid();
+	pid[1] = vs_syscall(VS_SYS_GETPID);
+	ASSERT_EQ(pid[0], pid[1]);
+	PASS();
+}
+
 GREATEST_MAIN_DEFS();
 
 SUITE(syscall_test)
@@ -86,6 +97,7 @@ SUITE(syscall_test)
 	RUN_TEST(vs_syscall_dup);
 	RUN_TEST(vs_syscall_socket);
 	RUN_TEST(vs_syscall_write_read);
+	RUN_TEST(vs_syscall_getpid);
 }
 
 int main(int argc, char **argv)
