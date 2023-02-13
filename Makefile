@@ -5,7 +5,7 @@ AS = as
 AR = ar rcs
 VS_VER	= 0.0.1
 VERSION = $(shell $(CC) --version | head -n1)
-CFLAGS = -Wall -Wextra -Werror -Iinc
+CFLAGS = -Wall -Wextra -Werror -Iinc -mrdrnd
 
 OBJDIR = obj
 DIST = dist

@@ -19,6 +19,7 @@
 //
 /////////////////////////////
 
+typedef unsigned int		vs_umode_t;
 typedef enum	vs_std_fd_t	vs_std_fd_t;
 
 /////////////////////////////
@@ -82,6 +83,9 @@ int			vs_dprinf(int fd, const char *restrict fmt, ...);
 int			vs_write(int fd, const void *buf, vs_size_t s);
 int			vs_read(int fd, void *buf, vs_size_t s);
 int			vs_putchar(int c);
+int			vs_atoi(const char *str);
+int			vs_open(const char *pathname, int flags, vs_umode_t mode);
+int			vs_close(int fd);
 void		vs_bzero(void *s, vs_size_t n);
 void		vs_free(void **ptr);
 
