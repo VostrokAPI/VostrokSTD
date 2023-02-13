@@ -23,6 +23,14 @@ typedef enum	vs_std_fd_t	vs_std_fd_t;
 
 /////////////////////////////
 //
+//		DEFINES
+//
+/////////////////////////////
+
+#define vs_putstr(str) (vs_puts(str))
+
+/////////////////////////////
+//
 //			ENUM
 //
 /////////////////////////////
@@ -72,8 +80,8 @@ int			vs_sprintf(char *restrict str, const char *restrict fmt, ...);
 int			vs_snprintf(char *restrict str, vs_size_t size, const char *restrict fmt, ...);
 int			vs_dprinf(int fd, const char *restrict fmt, ...);
 int			vs_write(int fd, const void *buf, vs_size_t s);
-int			vs_read(int fd, const void *buf, vs_size_t s);
-int			vs_putchar(char c);
+int			vs_read(int fd, void *buf, vs_size_t s);
+int			vs_putchar(int c);
 void		vs_bzero(void *s, vs_size_t n);
 void		vs_free(void **ptr);
 
