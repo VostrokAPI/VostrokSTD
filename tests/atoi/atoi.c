@@ -1,70 +1,19 @@
 #include "greatest.h"
+#include "vs_types.h"
+#include "vs_std.h"
+#include "vs_rand.h"
 #include <string.h>
 #include <stdlib.h>
 
-TEST	atoi_basic_test1(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test2(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test3(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test4(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test5(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test6(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test7(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test8(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test9(void)
-{
-	PASS();
-}
-
-TEST	atoi_basic_test10(void)
+TEST	atoi_basic_test_routine(void)
 {
 	PASS();
 }
 
 SUITE(atoi_basic_test)
 {
-	RUN_TEST(atoi_basic_test1);
-	RUN_TEST(atoi_basic_test2);
-	RUN_TEST(atoi_basic_test3);
-	RUN_TEST(atoi_basic_test4);
-	RUN_TEST(atoi_basic_test5);
-	RUN_TEST(atoi_basic_test6);
-	RUN_TEST(atoi_basic_test7);
-	RUN_TEST(atoi_basic_test8);
-	RUN_TEST(atoi_basic_test9);
-	RUN_TEST(atoi_basic_test10);
-
+	for (int i = 0; i < 10; i++)
+		RUN_TEST(atoi_basic_test_routine);
 }
 
 TEST	atoi_overflow_test1(void)

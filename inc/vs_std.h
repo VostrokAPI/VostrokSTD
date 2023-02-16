@@ -19,7 +19,6 @@
 //
 /////////////////////////////
 
-typedef unsigned int		vs_umode_t;
 typedef enum	vs_std_fd_t	vs_std_fd_t;
 
 /////////////////////////////
@@ -72,19 +71,17 @@ char		*vs_strtok(char *restrict str, const char *restrict delim);
 char		*vs_strrtok(char *restrict str, const char *restrict delim);
 char		*vs_strcat(char *restrict dst, const char *restrict src);
 char		*vs_strncat(char *restrict dst, const char *restrict src, vs_size_t n);
+char		*vs_itos(int nbr, char *buf, vs_size_t size);
 vs_size_t	vs_strspn(const char *s, const char *accept);
 vs_size_t	vs_strcspn(const char *s, const char *reject);
 vs_size_t	vs_gets(const char *s, vs_size_t n);
 int			vs_puts(const char *s);
-int			vs_printf(const char *restrict fmt, ...);
-int			vs_sprintf(char *restrict str, const char *restrict fmt, ...);
-int			vs_snprintf(char *restrict str, vs_size_t size, const char *restrict fmt, ...);
-int			vs_dprinf(int fd, const char *restrict fmt, ...);
 int			vs_write(int fd, const void *buf, vs_size_t s);
 int			vs_read(int fd, void *buf, vs_size_t s);
 int			vs_putchar(int c);
 int			vs_atoi(const char *str);
 int			vs_open(const char *pathname, int flags, vs_umode_t mode);
+vs_off_t	vs_lseek(int fd, vs_off_t offset, int whence);
 int			vs_close(int fd);
 void		vs_bzero(void *s, vs_size_t n);
 void		vs_free(void **ptr);

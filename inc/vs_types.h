@@ -8,6 +8,10 @@
 /////////////////////////////
 
 #define VS_NULL (void *)0
+#define VS_R_OK 4
+#define VS_W_OK 2
+#define VS_X_OK 1
+#define VS_F_OK 0
 
 /////////////////////////////
 //
@@ -30,6 +34,7 @@ typedef unsigned char*		vs_ustring_t;
 typedef unsigned long		vs_size_t;
 
 typedef enum vs_bool_t		vs_bool_t;
+typedef enum vs_seek_t		vs_seek_t;
 
 typedef long				vs_int128_t		__attribute__((__vector_size__(16), __aligned__(16)));
 typedef long				vs_int256_t		__attribute__((__vector_size__(32), __aligned__(32)));
@@ -39,6 +44,14 @@ typedef unsigned long		vs_uint128_t 	__attribute__((__vector_size__(16), __align
 typedef unsigned long		vs_uint256_t	__attribute__((__vector_size__(32), __aligned__(32)));
 
 typedef void*				vs_ptr_t;
+typedef char*				vs_charptr_t;
+typedef short*				vs_shortptr_t;
+typedef int*				vs_intptr_t;
+typedef long*				vs_longptr_t;
+typedef unsigned char*		vs_ucharptr_t;
+typedef unsigned short*		vs_ushortptr_t;
+typedef unsigned int*		vs_uintptr_t;
+typedef unsigned long*		vs_ulongptr_t;
 typedef int					vs_pid_t;
 typedef int					vs_fd_t;
 
@@ -46,6 +59,11 @@ typedef unsigned char		vs_byte_t;
 typedef unsigned short		vs_word_t;
 typedef unsigned int		vs_dword_t;
 typedef unsigned long		vs_qword_t;
+
+typedef unsigned int		vs_umode_t;
+typedef long int			vs_off_t;
+typedef long long			vs_off64_t;
+
 
 /////////////////////////////
 //
@@ -55,9 +73,17 @@ typedef unsigned long		vs_qword_t;
 
 enum vs_bool_t
 {
-	FALSE,
-	TRUE
+	VS_FALSE,
+	VS_TRUE
 };
 
+enum vs_seek_t
+{
+	VS_SEEK_SET,
+	VS_SEEK_CUR,
+	VS_SEEK_END,
+	VS_SEEK_DATA,
+	VS_SEEK_HOLE
+};
 
 #endif

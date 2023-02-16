@@ -21,6 +21,7 @@ TEST	open_basic_test2(void)
 	int fd = vs_open("notfound", O_RDONLY, S_IRUSR);
 
 	ASSERT_EQ(fd, -1);
+	ASSERT_EQ(errno, ENOENT);
 	PASS();
 }
 
