@@ -1,14 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "_vs_std.h"
+#include "vs_std.h"
+#include <stdio.h>
+#include <string.h>
 
-int main(int ac, char **av)
+int main(void)
 {
-	if (ac != 2)
-		return (1);
-	int res = atoi(av[1]);
-	if (res == -1)
-		printf("Hack\n");
-	printf("%d\n", res);
+	char	buf[0x100];
+	char	tobecopied[0x100];
+
+	memset(buf, 0, sizeof(buf));
+	memset(tobecopied, 0, sizeof(tobecopied));
+	strncpy(tobecopied, "test lol", strlen("test lol"));
+	__vs_memmove_erms_aligned(buf, tobecopied, strlen(tobecopied));
+	printf("%s\n", buf);
 	return (0);
 }

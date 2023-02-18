@@ -85,8 +85,45 @@ extern vs_size_t			__vs_strlen_sse42(const char *str);
 *********************************************************************/
 extern vs_size_t			__vs_strlen_avx2(const char *str);
 
+/*********************************************************************
+*
+* @brief    __vs_memmove_slow		Copy bytes to memory area
+*									slow because this functions 
+*									copy byte per byte and no use
+*									any extension to copy
+*
+* @param    void *dst				Destination of memory area
+* @param	const void *src			Source copied to destination
+* @param	vs_size_t				Size of source to be copied to destination
+*
+* @return   return dst				Which is destination of memory area
+*
+*********************************************************************/
+
+extern void					*__vs_mmemove_slow(void *dst, const void *src, vs_size_t size);
+
+/*********************************************************************
+*
+* @brief    __vs_memmove_erms		Copy bytes to memory area
+*									ERMS is for Enhanced rep movsb and stosb
+*									operation is optimization provide by intel
+*									you can refer to the intel optimization
+*									manual - section 3.7.6 to understand it
+*
+*									is very fast with lengths between 1 and 128 bytes
+*
+* @param    void *dst				Destination of memory area
+* @param	const void *src			Source to be copied to Destination memory area
+* @param	vs_size_t				Size of source to be copied
+*
+* @return   return dst				Which is destination of memory area
+*
+*********************************************************************/
 extern void					*__vs_memmove_erms(void *dst, const void *src, vs_size_t size);
+extern void					*__vs_memmove_erms_aligned(void *dst, const void *src, vs_size_t size);
+
 extern void					*__vs_memmove_avx_unaligned(void *dst, const void *src, vs_size_t size);
+extern void					*__vs_memmove_avx_unaligned_erms(void *dst, const void *src, vs_size_t size);
 extern void					*__vs_memmove_avx512_no_vzeroupper(void *dst, const void *src, vs_size_t size);
 extern void					*__vs_memmove_avx512_unaligned(void *dst, const void *src, vs_size_t size);
 extern void					*__vs_memmove_avx512_unaligned_erms(void *dst, const void *src, vs_size_t size);
