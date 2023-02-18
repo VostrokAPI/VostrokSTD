@@ -52,9 +52,9 @@ static int	_rev_int(int nb)
 
 char	*vs_itos(int nbr, char *buf, vs_size_t size)
 {
-	(void)size;
 	if (!buf) return (VS_NULL);
-
+	if (!size) return (buf);
+	
 	vs_uint32_t	zero = _count_zero(nbr);
 	vs_uint32_t	len = _nb_len(nbr);
 	int			rev = _rev_int(nbr);
