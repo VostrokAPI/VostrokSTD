@@ -44,14 +44,14 @@ typedef unsigned long		vs_uint128_t 	__attribute__((__vector_size__(16), __align
 typedef unsigned long		vs_uint256_t	__attribute__((__vector_size__(32), __aligned__(32)));
 
 typedef void*				vs_ptr_t;
-typedef char*				vs_charptr_t;
-typedef short*				vs_shortptr_t;
-typedef int*				vs_intptr_t;
-typedef long*				vs_longptr_t;
-typedef unsigned char*		vs_ucharptr_t;
-typedef unsigned short*		vs_ushortptr_t;
-typedef unsigned int*		vs_uintptr_t;
-typedef unsigned long*		vs_ulongptr_t;
+typedef char				vs_charptr_t;
+typedef short				vs_shortptr_t;
+typedef int					vs_intptr_t;
+typedef long				vs_longptr_t;
+typedef unsigned char		vs_ucharptr_t;
+typedef unsigned short		vs_ushortptr_t;
+typedef unsigned int		vs_uintptr_t;
+typedef unsigned long		vs_ulongptr_t;
 typedef int					vs_pid_t;
 typedef int					vs_fd_t;
 

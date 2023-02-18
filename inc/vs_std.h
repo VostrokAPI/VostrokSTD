@@ -53,8 +53,20 @@ enum	vs_std_fd_t
 *********************************************************************/
 vs_size_t	vs_strlen(const char *str);
 
-void		*vs_memcpy(void *restrict dst, const void *restrict src, vs_size_t n);
+/*********************************************************************
+*
+* @brief    vs_memmove		copy bytes on memory area
+*
+* @param    void	*dst		Destination of memory area
+* @param	const void *src		Source to be copied
+* @param	vs_size_t size		Size of source which be copied
+*
+* @return   pointer to dst		Destination of memory area
+*
+*********************************************************************/
 void		*vs_memmove(void *dst, const void *src, vs_size_t n);
+
+void		*vs_memcpy(void *restrict dst, const void *restrict src, vs_size_t n);
 void		*vs_memset(void *s, int c, vs_size_t size);
 void		*vs_memchr(void *s, int c, vs_size_t n);
 void		*vs_memmem(const void *htack, vs_size_t hlen, const void *ndle, vs_size_t nlen);
