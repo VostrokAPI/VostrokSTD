@@ -5,13 +5,12 @@
 
 int main(void)
 {
-	char	buf[0x100];
-	char	tobecopied[0x100];
+	char	dst[0x100];
+	char	src[0x100];
 
-	memset(buf, 0, sizeof(buf));
-	memset(tobecopied, 0, sizeof(tobecopied));
-	strncpy(tobecopied, "test lol", strlen("test lol"));
-	__vs_memmove_erms_aligned(buf, tobecopied, strlen(tobecopied));
-	printf("%s\n", buf);
+	strcpy(src, "hello");
+	__vs_memmove_erms(dst, src, strlen(src));
+
+	printf("%s\n", dst);
 	return (0);
 }

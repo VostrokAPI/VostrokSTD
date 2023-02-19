@@ -118,8 +118,46 @@ extern void					*__vs_mmemove_slow(void *dst, const void *src, vs_size_t size);
 *
 * @return   return dst				Which is destination of memory area
 *
+* @NOTE								if src < dst:
+* 										copy backforward
+* 									else
+* 										copy forward
+*
 *********************************************************************/
 extern void					*__vs_memmove_erms(void *dst, const void *src, vs_size_t size);
+
+/*********************************************************************
+*
+* @brief    __vs_memmove_erms_aligned		Copy bytes to memory area
+*											ERMS is for Enhanced rep movsb and stosb
+*											operation is optimization provide by intel
+*											you can refer to the intel optimization
+*											manual - section 3.7.6 to understand it
+*
+*											is very fast with lengths between 1 and 128 bytes
+*
+*											aligned version allow you copy per block size
+*											for example if size is multiple of 8 than
+*											rep movsq is used and size is divided by 8
+*
+*											is the same if size is multiple of 4 and 2
+*
+*											if size is non multiple of 8,4,2 
+*											than copy byte per byte
+*											is used
+*
+* @param    void *dst						Destination of memory area
+* @param	const void *src					Source to be copied to Destination memory area
+* @param	vs_size_t						Size of source to be copied
+*
+* @return   return dst						Which is destination of memory area
+*
+* @NOTE										if src < dst:
+* 												copy backforward
+* 											else
+* 												copy forward
+*
+*********************************************************************/
 extern void					*__vs_memmove_erms_aligned(void *dst, const void *src, vs_size_t size);
 
 extern void					*__vs_memmove_avx_unaligned(void *dst, const void *src, vs_size_t size);
