@@ -1,6 +1,8 @@
 #include "greatest.h"
 #include "_vs_std.h"
 #include "vs_rand.h"
+#include "vs_types.h"
+#include <stdlib.h>
 #include <string.h>
 
 /////////////////////////////
@@ -217,56 +219,156 @@ TEST	memmove_erms_basic_8192(void)
 
 TEST	memmove_erms_basic_16384(void)
 {
+	char	dst[16384];
+	char	src[16384];
+
+	memset(dst, 0, sizeof(dst));
+	memset(src, 'A', sizeof(src));
+	__vs_memmove_erms(dst, src, sizeof(src));
+	ASSERT_MEM_EQ(dst, src, sizeof(src));
 	PASS();
 }
 
 TEST	memmove_erms_basic_32768(void)
 {
+	char	dst[32768];
+	char	src[32768];
+
+	memset(dst, 0, sizeof(dst));
+	memset(src, 'A', sizeof(src));
+	__vs_memmove_erms(dst, src, sizeof(src));
+	ASSERT_MEM_EQ(dst, src, sizeof(src));
 	PASS();
 }
 
 TEST	memmove_erms_basic_48000(void)
 {
+	char	dst[48000];
+	char	src[48000];
+
+	memset(dst, 0, sizeof(dst));
+	memset(src, 'A', sizeof(src));
+	__vs_memmove_erms(dst, src, sizeof(src));
+	ASSERT_MEM_EQ(dst, src, sizeof(src));
 	PASS();
 }
 
 TEST	memmove_erms_basic_65535(void)
 {
+	char	*dst = (char *)malloc(sizeof(char) * 0xFFFF);
+	char	*src = (char *)malloc(sizeof(char) * 0xFFFF);
+
+	memset(dst, 0, 0xFFFF);
+	memset(src, 'A', 0xFFFF);
+	__vs_memmove_erms(dst, src, 0xFFFF);
+	ASSERT_MEM_EQ(dst, src, 0xFFFF);
+	free(dst);
+	free(src);
 	PASS();
 }
 
 TEST	memmove_erms_basic_FFFFF(void)
 {
+	char	*dst = (char *)malloc(sizeof(char) * 0xFFFFF);
+	char	*src = (char *)malloc(sizeof(char) * 0xFFFFF);
+
+	memset(dst, 0, 0xFFFFF);
+	memset(src, 'A', 0xFFFFF);
+	__vs_memmove_erms(dst, src, 0xFFFFF);
+	ASSERT_MEM_EQ(dst, src, 0xFFFFF);
+	free(dst);
+	free(src);
 	PASS();
 }
 
 TEST	memmove_erms_basic_FFFFFF(void)
 {
+	char	*dst = (char *)malloc(sizeof(char) * 0xFFFFFF);
+	char	*src = (char *)malloc(sizeof(char) * 0xFFFFFF);
+
+	memset(dst, 0, 0xFFFFFF);
+	memset(src, 'A', 0xFFFFFF);
+	__vs_memmove_erms(dst, src, 0xFFFFFF);
+	ASSERT_MEM_EQ(dst, src, 0xFFFFFF);
+	free(dst);
+	free(src);
 	PASS();
 }
 
 TEST	memmove_erms_basic_1000(void)
 {
-	PASS();
-}
+	char	dst[1000];
+	char	src[1000];
 
-TEST	memmove_erms_basic_FFFFFFFF(void)
-{
+	memset(dst, 0, sizeof(dst));
+	memset(src, 'A', sizeof(src));
+	__vs_memmove_erms(dst, src, sizeof(dst));
+	ASSERT_MEM_EQ(dst, src, sizeof(dst));
 	PASS();
 }
 
 TEST	memmove_erms_basic_7FFFFFFF(void)
 {
+	char	*dst = (char *)malloc(sizeof(char) * 0x7FFFFFFF);
+	char	*src = (char *)malloc(sizeof(char) * 0x7FFFFFFF);
+
+	memset(dst, 0, 0x7FFFFFFF);
+	memset(src, 'A', 0x7FFFFFFF);
+	__vs_memmove_erms(dst, src, 0x7FFFFFFF);
+	ASSERT_MEM_EQ(dst, src, 0x7FFFFFFF);
+	free(dst);
+	free(src);
 	PASS();
 }
 
 TEST	memmove_erms_basic_80000000(void)
 {
+	char	*dst = (char *)malloc(sizeof(char) * 0x80000000);
+	char	*src = (char *)malloc(sizeof(char) * 0x80000000);
+
+	memset(dst, 0, 0x80000000);
+	memset(src, 'A', 0x80000000);
+	__vs_memmove_erms(dst, src, 0x80000000);
+	ASSERT_MEM_EQ(dst, src, 0x80000000);
+	free(dst);
+	free(src);
 	PASS();
 }
 
 TEST	memmove_erms_basic_random(void)
 {
+	vs_uint8_t	dst[0xFFFFF];
+	vs_uint8_t	buf[0xFFFFF];
+
+	memset(dst, 0, sizeof(dst));
+	memset(buf, 0, sizeof(buf));
+	vs_rdrand(buf, sizeof(buf));
+	__vs_memmove_erms(dst, buf, sizeof(buf));
+	ASSERT_MEM_EQ(dst, buf, sizeof(buf));
+	PASS();
+}
+
+TEST	memmove_erms_basic_random_cpy_backward(void)
+{
+	vs_uint8_t	buf[0xFFFFF];
+	vs_uint8_t	dst[0xFFFFF];
+
+	memset(dst, 0, sizeof(dst));
+	memset(buf, 0, sizeof(buf));
+	vs_rdrand(buf, sizeof(buf));
+	__vs_memmove_erms(dst, buf, sizeof(buf));
+	ASSERT_MEM_EQ(dst, buf, sizeof(buf));
+	PASS();
+}
+
+TEST	memmove_erms_basic_segvtest(void)
+{
+	char	buf[0x100];
+	char	*ptr = buf;
+
+	ASSERT_EQ(ptr, __vs_memmove_erms(buf, NULL, 5));
+	ASSERT_EQ(ptr, __vs_memmove_erms(buf, "hello", 0));
+	ASSERT_EQ(VS_NULL, __vs_memmove_erms(VS_NULL, "hello", 5));
 	PASS();
 }
 
@@ -297,13 +399,14 @@ SUITE(memmove_erms_test)
 	RUN_TEST(memmove_erms_basic_65535);
 	RUN_TEST(memmove_erms_basic_FFFFF);
 	RUN_TEST(memmove_erms_basic_FFFFFF);
-	RUN_TEST(memmove_erms_basic_FFFFFFFF);
 	RUN_TEST(memmove_erms_basic_7FFFFFFF);
 	RUN_TEST(memmove_erms_basic_80000000);
 	for (int i = 0; i < 100; i++)
 		RUN_TEST(memmove_erms_basic_random);
+	for (int i = 0; i < 100; i++)
+		RUN_TEST(memmove_erms_basic_random_cpy_backward);
+	RUN_TEST(memmove_erms_basic_segvtest);
 }
-
 
 GREATEST_MAIN_DEFS();
 

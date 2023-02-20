@@ -21,7 +21,7 @@ TEST	atoi_basic_test_routine(void)
 
 SUITE(atoi_basic_test)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 50; i++)
 		RUN_TEST(atoi_basic_test_routine);
 }
 
