@@ -18,7 +18,6 @@ __vs_strlen_sse42:
 	add eax, ecx
 	test ecx, ecx
 	jnz .L_loop
-	ret
 
 .L_null:
 	ret

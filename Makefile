@@ -1,11 +1,11 @@
 AUTHOR = https://github.com/Unam3dd
 NAME = libvsstd
 CC = gcc
-AS = as
+AS = as --64 -O1
 AR = ar rcs
 VS_VER	= 0.0.1
 VERSION = $(shell $(CC) --version | head -n1)
-CFLAGS = -Wall -Wextra -Werror -Iinc -mrdrnd
+CFLAGS = -Wall -Wextra -Werror -Iinc -mrdrnd -fPIC
 
 OBJDIR = obj
 DIST = dist

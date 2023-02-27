@@ -1,5 +1,6 @@
 #include "vs_std.h"
 #include "_vs_std.h"
+#include <cpuid.h>
 
 /////////////////////////////
 //
@@ -8,8 +9,6 @@
 /////////////////////////////
 
 #include "vs_types.h"
-
-void	*vs_memmove(void *dst, const void *src, vs_size_t size) __attribute__ ((ifunc ("__vs_memmove_ifunc")));
 
 void	*__vs_memmove_slow(void *dst, const void *src, vs_size_t size)
 {
@@ -22,7 +21,16 @@ void	*__vs_memmove_slow(void *dst, const void *src, vs_size_t size)
 	return (dst);
 }
 
+void	*vs_memmove(void *dst, const void *src, vs_size_t size) __attribute__ ((ifunc ("__vs_memmove_ifunc")));
+
+
 static void *(*__vs_memmove_ifunc (void))(void *dst, const void *src, vs_size_t size)
 {
-	return (__vs_memmove_erms);
+	unsigned int eax, ebx, ecx, edx;
+
+	__get_cpuid(0x7, &eax, &ebx, &ecx, &edx);
+
+	if ((ebx & 0x100))
+		return (__vs_memmove_erms);
+	return (__vs_memmove_slow);
 }

@@ -100,7 +100,7 @@ extern vs_size_t			__vs_strlen_avx2(const char *str);
 *
 *********************************************************************/
 
-extern void					*__vs_mmemove_slow(void *dst, const void *src, vs_size_t size);
+void						*__vs_mmemove_slow(void *dst, const void *src, vs_size_t size);
 
 /*********************************************************************
 *
